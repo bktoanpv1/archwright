@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "7e174d6c-3733-4de5-8aa4-1bc7c9506151",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "E:\\git\\archwright\\domains\\llm-agent\\src\\01-overview.architecture.json",
+  "output": "E:\\git\\archwright\\domains\\llm-agent\\dist\\01-overview.html",
+  "specification": {
+    "sha256": "efe6f364f3f5fac8ce8034adaed59b64a42931847faafb790b4c941ff66cb967",
+    "bytes": 10634
+  },
+  "artifact": {
+    "sha256": "3f5f1bc66ffdffa2c25ebdf6ada232462489b34c06133bd5889c81f49b71a0cf",
+    "bytes": 874199
+  }
+}

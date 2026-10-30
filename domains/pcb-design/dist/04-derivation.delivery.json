@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "79c4af6a-6d1d-4d2d-bfbd-40eaeb4643d7",
+  "status": "current",
+  "command": "deliver",
+  "type": "dataflow",
+  "input": "E:\\git\\archwright\\domains\\pcb-design\\src\\04-derivation.dataflow.json",
+  "output": "E:\\git\\archwright\\domains\\pcb-design\\dist\\04-derivation.html",
+  "specification": {
+    "sha256": "d2e9b74c6f229359e38d5e6fc291c0bc9855a70c9629f3b42951aaae43596b1c",
+    "bytes": 5487
+  },
+  "artifact": {
+    "sha256": "2d7d8f58ba5679015d72edb9c3ea015af78ee0993bc25a94a5def7493d57a34b",
+    "bytes": 854742
+  }
+}

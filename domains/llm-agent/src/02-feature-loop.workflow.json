@@ -1,0 +1,358 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Vòng lặp agent thực hiện một thay đổi LLM agent",
+    "locale": "vi",
+    "output": "domains/llm-agent/dist/02-feature-loop.html",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "kb",
+      "label": "Tri thức"
+    },
+    {
+      "id": "human",
+      "label": "Kỹ sư · cổng duyệt"
+    },
+    {
+      "id": "agent",
+      "label": "Agent"
+    },
+    {
+      "id": "tools",
+      "label": "Công cụ & kiểm chứng"
+    }
+  ],
+  "phases": [
+    {
+      "id": "p_design",
+      "label": "Thiết kế",
+      "fromCol": 0,
+      "toCol": 1
+    },
+    {
+      "id": "p_build",
+      "label": "Thực hiện + kiểm chứng",
+      "fromCol": 2,
+      "toCol": 3,
+      "variant": "emphasis"
+    },
+    {
+      "id": "p_release",
+      "label": "Phát hành + quan sát",
+      "fromCol": 4,
+      "toCol": 5,
+      "variant": "dashed"
+    }
+  ],
+  "groups": [
+    {
+      "id": "g_gates",
+      "label": "Kiểm chứng trước phát hành",
+      "lane": "tools",
+      "fromCol": 2,
+      "toCol": 3,
+      "variant": "security"
+    }
+  ],
+  "mainPath": [
+    "req",
+    "spec",
+    "approve",
+    "make",
+    "gates",
+    "review",
+    "eval",
+    "verdict",
+    "merge",
+    "canary",
+    "verdict_prod",
+    "annotate",
+    "learn"
+  ],
+  "nodes": [
+    {
+      "id": "kb_read",
+      "lane": "kb",
+      "col": 0,
+      "type": "database",
+      "label": "refs · skills · decisions",
+      "sublabel": "lỗi đã biết, eval dev"
+    },
+    {
+      "id": "req",
+      "lane": "human",
+      "col": 0,
+      "type": "external",
+      "label": "Yêu cầu thay đổi",
+      "sublabel": "yêu cầu, lỗi, model ngừng"
+    },
+    {
+      "id": "spec",
+      "lane": "agent",
+      "col": 1,
+      "type": "backend",
+      "label": "planner",
+      "sublabel": "spec + tiêu chí eval"
+    },
+    {
+      "id": "approve",
+      "lane": "human",
+      "col": 1,
+      "type": "security",
+      "label": "Duyệt thiết kế",
+      "sublabel": "khi đổi hành vi, an toàn"
+    },
+    {
+      "id": "make",
+      "lane": "agent",
+      "col": 2,
+      "type": "backend",
+      "label": "builder",
+      "sublabel": "code · prompt · cấu hình"
+    },
+    {
+      "id": "gates",
+      "lane": "tools",
+      "col": 2,
+      "type": "security",
+      "label": "Kiểm nhanh",
+      "sublabel": "lint, unit, schema, eval dev"
+    },
+    {
+      "id": "review",
+      "lane": "agent",
+      "col": 3,
+      "type": "backend",
+      "label": "reviewer",
+      "sublabel": "checklist + decisions"
+    },
+    {
+      "id": "eval",
+      "lane": "tools",
+      "col": 3,
+      "type": "cloud",
+      "label": "Eval held-out",
+      "sublabel": "tính năng, red team, pass^k"
+    },
+    {
+      "id": "verdict",
+      "lane": "agent",
+      "col": 4,
+      "type": "backend",
+      "label": "verifier",
+      "sublabel": "PASS / FAIL / BLOCKED"
+    },
+    {
+      "id": "merge",
+      "lane": "human",
+      "col": 4,
+      "type": "security",
+      "label": "Duyệt phát hành",
+      "sublabel": "eval, diff prompt, chi phí"
+    },
+    {
+      "id": "canary",
+      "lane": "tools",
+      "col": 5,
+      "type": "cloud",
+      "label": "Shadow → canary",
+      "sublabel": "trace, an toàn, chi phí"
+    },
+    {
+      "id": "verdict_prod",
+      "lane": "agent",
+      "col": 5,
+      "type": "backend",
+      "label": "verifier",
+      "sublabel": "giữ / chuyển nhãn về"
+    },
+    {
+      "id": "annotate",
+      "lane": "human",
+      "col": 5,
+      "type": "security",
+      "label": "Gán nhãn lỗi",
+      "sublabel": "chuyên gia sản phẩm"
+    },
+    {
+      "id": "learn",
+      "lane": "kb",
+      "col": 5,
+      "type": "database",
+      "label": "curator",
+      "sublabel": "ca eval, judge, lỗi đã biết"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-req-spec",
+      "from": "req",
+      "to": "spec",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-kb-spec",
+      "from": "kb_read",
+      "to": "spec",
+      "label": "nạp tri thức",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e-spec-approve",
+      "from": "spec",
+      "to": "approve",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-approve-make",
+      "from": "approve",
+      "to": "make",
+      "label": "đồng ý",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-make-gates",
+      "from": "make",
+      "to": "gates",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-gates-review",
+      "from": "gates",
+      "to": "review",
+      "label": "xanh",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-review-eval",
+      "from": "review",
+      "to": "eval",
+      "label": "vùng ảnh hưởng",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-review-verdict",
+      "from": "review",
+      "to": "verdict",
+      "label": "ngoài vùng eval",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e-eval-verdict",
+      "from": "eval",
+      "to": "verdict",
+      "label": "chỉ số",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-verdict-merge",
+      "from": "verdict",
+      "to": "merge",
+      "label": "PASS",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-merge-canary",
+      "from": "merge",
+      "to": "canary",
+      "label": "phát hành",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-canary-verdict",
+      "from": "canary",
+      "to": "verdict_prod",
+      "label": "chỉ số thật",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-prod-annotate",
+      "from": "verdict_prod",
+      "to": "annotate",
+      "label": "trace mẫu",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-annotate-learn",
+      "from": "annotate",
+      "to": "learn",
+      "label": "nhãn",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-gates-fail",
+      "from": "gates",
+      "to": "make",
+      "label": "lỗi",
+      "variant": "security",
+      "role": "error"
+    },
+    {
+      "id": "e-review-fail",
+      "from": "review",
+      "to": "make",
+      "label": "cần sửa",
+      "variant": "security",
+      "role": "error"
+    },
+    {
+      "id": "e-verdict-fail",
+      "from": "verdict",
+      "to": "make",
+      "label": "FAIL",
+      "variant": "security",
+      "role": "return"
+    },
+    {
+      "id": "e-rollback",
+      "from": "verdict_prod",
+      "to": "canary",
+      "label": "rollback",
+      "variant": "security",
+      "role": "error"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Khác domain nhúng ở đâu",
+      "items": [
+        "Artefact gồm cả prompt, cấu hình ngoài git và snapshot model; chuyển nhãn prompt cũng là một lần phát hành, đi cùng vòng lặp này",
+        "Bằng chứng là chỉ số dao động: chạy N lần từ môi trường sạch, báo pass^k, so cặp với baseline",
+        "Kiểm chứng thật chỉ có sau phát hành: shadow, canary và quan sát có phán quyết riêng"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Hai bộ eval, hai người giữ",
+      "items": [
+        "Eval dev: builder đọc và chạy được trong kiểm nhanh",
+        "Eval held-out: đóng băng, chỉ verifier chạy; builder không có quyền ghi bộ eval, judge, held-out (chặn bằng hook, không chỉ dặn bằng lời)",
+        "Hết quota hay model lỗi: verifier trả BLOCKED, người duyệt quyết"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Người giữ quyền quyết",
+      "items": [
+        "Duyệt thiết kế khi đổi hành vi với người dùng hoặc an toàn",
+        "Duyệt phát hành đọc báo cáo eval, diff prompt, mẫu hội thoại hỏng và tác động chi phí (sửa tool làm mất prompt cache)",
+        "Gán nhãn lỗi do chuyên gia sản phẩm làm; agent chỉ gom cụm và soạn nháp"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Đường quay lại",
+      "items": [
+        "Kiểm nhanh lỗi, review yêu cầu sửa, held-out FAIL đều về builder",
+        "Chỉ số thật xấu đi: chuyển nhãn production về phiên bản trước (không cần đổi code), rồi mở thay đổi mới",
+        "Model sắp ngừng hỗ trợ là một yêu cầu thay đổi: đi lại cả vòng, chạy đủ bộ eval"
+      ]
+    }
+  ]
+}

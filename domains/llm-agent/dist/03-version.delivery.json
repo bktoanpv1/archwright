@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "185bbddb-a12c-4a1d-857e-c04aaed4269a",
+  "status": "current",
+  "command": "deliver",
+  "type": "lifecycle",
+  "input": "E:\\git\\archwright\\domains\\llm-agent\\src\\03-version.lifecycle.json",
+  "output": "E:\\git\\archwright\\domains\\llm-agent\\dist\\03-version.html",
+  "specification": {
+    "sha256": "bd5462c00c2090fec08d191128e46acb76ffbf4b26ecdaa887bbd1e7e5945f43",
+    "bytes": 4377
+  },
+  "artifact": {
+    "sha256": "cde547ca85327413ec912875048f77560c6f4253d3eb95b04169f7a640490a1b",
+    "bytes": 850237
+  }
+}

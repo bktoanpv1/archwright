@@ -1,0 +1,499 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "archwright · domain nhúng: sơ đồ tổng quan",
+    "locale": "vi",
+    "output": "domains/embedded-mcu/dist/01-overview.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "src_chip",
+      "type": "database",
+      "label": "Datasheet · Errata · TRM",
+      "sublabel": "+ SVD, header SDK của hãng",
+      "pos": [
+        140,
+        40
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "src_books",
+      "type": "database",
+      "label": "Sách kỹ thuật nhúng",
+      "sublabel": "RTOS, driver, low-power, C",
+      "pos": [
+        380,
+        40
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "src_std",
+      "type": "security",
+      "label": "Tiêu chuẩn theo mức an toàn",
+      "sublabel": "MISRA C · IEC 61508 · ISO 26262",
+      "pos": [
+        620,
+        40
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "src_arch",
+      "type": "database",
+      "label": "Kiến trúc tham chiếu",
+      "sublabel": "AUTOSAR · HAL/BSP phân lớp",
+      "pos": [
+        860,
+        40
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "b2s",
+      "type": "backend",
+      "label": "book-to-skill",
+      "sublabel": "trích xuất + chưng cất",
+      "pos": [
+        500,
+        170
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "kb_refs",
+      "type": "database",
+      "label": "refs/*.txt",
+      "sublabel": "tra số liệu chính xác (grep)",
+      "pos": [
+        330,
+        300
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "kb_skills",
+      "type": "database",
+      "label": "Skills chuyên ngành",
+      "sublabel": "quy tắc, phán đoán (≤ 5)",
+      "pos": [
+        655,
+        300
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "kb_internal",
+      "type": "database",
+      "label": "Tri thức nội bộ",
+      "sublabel": "decisions · issues · lỗi đã biết",
+      "pos": [
+        1010,
+        300
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "engineer",
+      "type": "external",
+      "label": "Kỹ sư / PO",
+      "sublabel": "yêu cầu tính năng",
+      "pos": [
+        40,
+        450
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "domain",
+      "type": "cloud",
+      "label": "Domain Pack: embedded-mcu",
+      "sublabel": "nguồn · chuẩn · agent · verify",
+      "pos": [
+        320,
+        450
+      ],
+      "size": [
+        190,
+        64
+      ],
+      "tag": "mô hình hoá domain"
+    },
+    {
+      "id": "orch",
+      "type": "backend",
+      "label": "Agent điều phối",
+      "sublabel": "Claude Code đọc CLAUDE.md",
+      "pos": [
+        650,
+        450
+      ],
+      "size": [
+        210,
+        64
+      ]
+    },
+    {
+      "id": "loop",
+      "type": "backend",
+      "label": "Vòng lặp tính năng",
+      "sublabel": "cổng tự động → review → HIL",
+      "pos": [
+        1000,
+        450
+      ],
+      "size": [
+        200,
+        64
+      ],
+      "tag": "xem sơ đồ workflow"
+    },
+    {
+      "id": "repo",
+      "type": "database",
+      "label": "Repo dự án",
+      "sublabel": "fw · hw · docs · CI",
+      "pos": [
+        1425,
+        450
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "t_archify",
+      "type": "frontend",
+      "label": "archify",
+      "sublabel": "sơ đồ kiến trúc, luồng",
+      "pos": [
+        530,
+        620
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "t_gitnexus",
+      "type": "backend",
+      "label": "gitnexus",
+      "sublabel": "đồ thị code, impact",
+      "pos": [
+        730,
+        620
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "t_static",
+      "type": "security",
+      "label": "Phân tích tĩnh",
+      "sublabel": "cppcheck, một phần MISRA",
+      "pos": [
+        930,
+        620
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "t_hil",
+      "type": "cloud",
+      "label": "HIL bench",
+      "sublabel": "flash · chấm log · đo dòng",
+      "pos": [
+        1140,
+        620
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "fleet",
+      "type": "cloud",
+      "label": "Thiết bị hiện trường",
+      "sublabel": "OTA theo đợt → toàn bộ",
+      "pos": [
+        1425,
+        620
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "telemetry",
+      "type": "database",
+      "label": "Telemetry & coredump",
+      "sublabel": "log, crash, dòng tiêu thụ",
+      "pos": [
+        1425,
+        760
+      ],
+      "size": [
+        180,
+        64
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Khối 1 · Tri thức nhúng",
+      "wraps": [
+        "src_chip",
+        "src_books",
+        "src_std",
+        "src_arch",
+        "b2s",
+        "kb_refs",
+        "kb_skills",
+        "kb_internal"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Khối 4 · Mô hình hoá domain",
+      "wraps": [
+        "domain"
+      ]
+    },
+    {
+      "kind": "security-group",
+      "label": "Khối 3 · Workflow",
+      "wraps": [
+        "orch",
+        "loop"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Khối 2 · Agent & công cụ",
+      "wraps": [
+        "t_archify",
+        "t_gitnexus",
+        "t_static",
+        "t_hil"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Vận hành",
+      "wraps": [
+        "fleet",
+        "telemetry"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "chip-in",
+      "from": "src_chip",
+      "to": "b2s"
+    },
+    {
+      "id": "books-in",
+      "from": "src_books",
+      "to": "b2s"
+    },
+    {
+      "id": "std-in",
+      "from": "src_std",
+      "to": "b2s"
+    },
+    {
+      "id": "arch-in",
+      "from": "src_arch",
+      "to": "b2s"
+    },
+    {
+      "id": "extract",
+      "from": "b2s",
+      "to": "kb_refs",
+      "label": "extract"
+    },
+    {
+      "id": "distill",
+      "from": "b2s",
+      "to": "kb_skills",
+      "label": "distill"
+    },
+    {
+      "id": "pick-domain",
+      "from": "engineer",
+      "to": "domain",
+      "label": "chọn domain",
+      "variant": "emphasis"
+    },
+    {
+      "id": "generate",
+      "from": "domain",
+      "to": "orch",
+      "label": "sinh khung (1 lần)",
+      "variant": "emphasis"
+    },
+    {
+      "id": "assign",
+      "from": "orch",
+      "to": "loop",
+      "label": "giao tính năng",
+      "variant": "emphasis"
+    },
+    {
+      "id": "deliver",
+      "from": "loop",
+      "to": "repo",
+      "label": "commit + PASS",
+      "variant": "emphasis"
+    },
+    {
+      "id": "exact-facts",
+      "from": "kb_refs",
+      "to": "orch",
+      "label": "số liệu",
+      "toSide": "top"
+    },
+    {
+      "id": "rules",
+      "from": "kb_skills",
+      "to": "orch",
+      "label": "quy tắc"
+    },
+    {
+      "id": "history",
+      "from": "kb_internal",
+      "to": "loop",
+      "label": "quyết định, lỗi cũ"
+    },
+    {
+      "id": "use-archify",
+      "from": "loop",
+      "to": "t_archify",
+      "variant": "dashed"
+    },
+    {
+      "id": "use-gitnexus",
+      "from": "loop",
+      "to": "t_gitnexus",
+      "variant": "dashed"
+    },
+    {
+      "id": "use-static",
+      "from": "loop",
+      "to": "t_static",
+      "variant": "dashed"
+    },
+    {
+      "id": "use-hil",
+      "from": "loop",
+      "to": "t_hil",
+      "variant": "dashed"
+    },
+    {
+      "id": "release",
+      "from": "repo",
+      "to": "fleet",
+      "label": "OTA",
+      "variant": "emphasis"
+    },
+    {
+      "id": "field-data",
+      "from": "fleet",
+      "to": "telemetry",
+      "label": "gửi telemetry",
+      "variant": "emphasis"
+    },
+    {
+      "id": "lessons",
+      "from": "telemetry",
+      "to": "kb_internal",
+      "label": "crash → lỗi đã biết",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "right"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Khối 1 · Tri thức nhúng",
+      "items": [
+        "Datasheet, errata, TRM, SVD: chỉ trích xuất (grep) kèm số trang, không tóm tắt",
+        "Sách và kiến trúc tham chiếu: chưng cất thành skill",
+        "Tiêu chuẩn bật theo mức an toàn trong domain.toml; chỉ giữ mã quy tắc + diễn giải tự viết",
+        "Tri thức nội bộ gồm cả dấu hiệu lỗi đã biết, cập nhật từ crash và telemetry hiện trường"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Khối 2 · Agent & công cụ",
+      "items": [
+        "archify: vẽ kiến trúc và luồng làm đầu vào cho thiết kế",
+        "gitnexus: phân tích ảnh hưởng trước khi sửa một hàm",
+        "Phân tích tĩnh: cppcheck, chỉ phủ một phần MISRA C",
+        "HIL bench: chạy theo chính sách, đo cả dòng ngủ cho ngân sách pin",
+        "ponytail là kỷ luật viết code của builder (skill), không phải cổng kiểm chứng"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Khối 3 · Workflow",
+      "items": [
+        "Agent điều phối đọc CLAUDE.md, giao việc cho vòng lặp",
+        "Vòng lặp: spec → duyệt → code + doc → cổng tự động → review → HIL (khi cần) → merge",
+        "Merge chưa phải kết thúc: OTA theo đợt và telemetry quyết giữ hay rollback"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Khối 4 · Mô hình hoá domain",
+      "items": [
+        "Domain Pack khai báo: nguồn tri thức, mức an toàn, công cụ, các bước kiểm chứng",
+        "Lúc sinh: new_project.py chép core + overlay một lần; lúc chạy agent chỉ đọc file trong repo",
+        "Bài học đúng ở ≥ 2 dự án được đề xuất lên pack, người duyệt mới nhận",
+        "Đổi domain = đổi pack; agent điều phối và vòng lặp giữ nguyên"
+      ]
+    }
+  ]
+}

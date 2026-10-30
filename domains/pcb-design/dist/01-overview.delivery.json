@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "235eb0a1-97c7-4d97-bc13-bbadcacbcac1",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "E:\\git\\archwright\\domains\\pcb-design\\src\\01-overview.architecture.json",
+  "output": "E:\\git\\archwright\\domains\\pcb-design\\dist\\01-overview.html",
+  "specification": {
+    "sha256": "023155523ebd190276a9844c225c209a285094332bdeb91066f1c2d810ff66f5",
+    "bytes": 11661
+  },
+  "artifact": {
+    "sha256": "c43bc5d2e92806ba428356e3fa09419cdacb15f6efe69d36b8f4abbf647be399",
+    "bytes": 879479
+  }
+}

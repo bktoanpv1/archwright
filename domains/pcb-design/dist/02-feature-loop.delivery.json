@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "f9e79683-fc39-4b3e-877b-b5e5bc5ff3e7",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "E:\\git\\archwright\\domains\\pcb-design\\src\\02-feature-loop.workflow.json",
+  "output": "E:\\git\\archwright\\domains\\pcb-design\\dist\\02-feature-loop.html",
+  "specification": {
+    "sha256": "d791a1dc8de7c75282f903aeca614fb1f67fed23066ff55e5fbd222d815b31e4",
+    "bytes": 9205
+  },
+  "artifact": {
+    "sha256": "fd255e7533a02519f20e8e56ee8b769fd64cc7327f8b5eb967c11cef617cfe5e",
+    "bytes": 865904
+  }
+}

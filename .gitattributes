@@ -1,0 +1,5 @@
+# Chuẩn hoá xuống dòng LF cho mọi file văn bản
+* text=auto eol=lf
+
+# HTML sinh tự động từ src/: ẩn khỏi diff review và thống kê ngôn ngữ
+domains/*/dist/** linguist-generated=true

@@ -1,0 +1,543 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "archwright · domain thiết kế mạch PCB: sơ đồ tổng quan",
+    "locale": "vi",
+    "output": "domains/pcb-design/dist/01-overview.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "src_parts",
+      "type": "database",
+      "label": "Datasheet linh kiện",
+      "sublabel": "pinout, footprint, giới hạn",
+      "pos": [
+        140,
+        40
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "src_appnotes",
+      "type": "database",
+      "label": "App note & thiết kế mẫu",
+      "sublabel": "nguồn, RF, layout gợi ý",
+      "pos": [
+        380,
+        40
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "src_std",
+      "type": "security",
+      "label": "Tiêu chuẩn IPC & EMC",
+      "sublabel": "IPC-2221 · IPC-7351 · IEC 61000",
+      "pos": [
+        620,
+        40
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "src_fab",
+      "type": "database",
+      "label": "Năng lực nhà sản xuất",
+      "sublabel": "luật DFM, stackup, giá",
+      "pos": [
+        860,
+        40
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "b2s",
+      "type": "backend",
+      "label": "book-to-skill",
+      "sublabel": "trích xuất + chưng cất",
+      "pos": [
+        500,
+        170
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "kb_refs",
+      "type": "database",
+      "label": "refs/*.txt",
+      "sublabel": "pinout, kích thước, DFM (grep)",
+      "pos": [
+        330,
+        300
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "kb_skills",
+      "type": "database",
+      "label": "Skills chuyên ngành",
+      "sublabel": "nguồn, SI/PI, EMC, layout",
+      "pos": [
+        655,
+        300
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "kb_internal",
+      "type": "database",
+      "label": "Tri thức nội bộ",
+      "sublabel": "decisions · errata · thư viện",
+      "pos": [
+        1010,
+        300
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "engineer",
+      "type": "external",
+      "label": "Kỹ sư / PO",
+      "sublabel": "yêu cầu board",
+      "pos": [
+        40,
+        450
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "domain",
+      "type": "cloud",
+      "label": "Domain Pack: pcb-design",
+      "sublabel": "mặc định: nguồn · bước · luật",
+      "pos": [
+        320,
+        450
+      ],
+      "size": [
+        190,
+        64
+      ],
+      "tag": "mô hình hoá domain"
+    },
+    {
+      "id": "orch",
+      "type": "backend",
+      "label": "Agent điều phối",
+      "sublabel": "Claude Code đọc CLAUDE.md",
+      "pos": [
+        650,
+        450
+      ],
+      "size": [
+        210,
+        64
+      ]
+    },
+    {
+      "id": "loop",
+      "type": "backend",
+      "label": "Vòng lặp một board",
+      "sublabel": "schematic → placement → routing",
+      "pos": [
+        1000,
+        450
+      ],
+      "size": [
+        200,
+        64
+      ],
+      "tag": "xem sơ đồ workflow"
+    },
+    {
+      "id": "artefact",
+      "type": "database",
+      "label": "Thiết kế có phiên bản",
+      "sublabel": "schematic · layout · BOM · thư viện",
+      "pos": [
+        1420,
+        450
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "t_edit",
+      "type": "backend",
+      "label": "Lớp sửa có cấu trúc",
+      "sublabel": "SKiDL · atopile · S-expr",
+      "pos": [
+        120,
+        620
+      ],
+      "size": [
+        180,
+        64
+      ],
+      "tag": "chưa chốt"
+    },
+    {
+      "id": "t_fp",
+      "type": "security",
+      "label": "Sinh footprint",
+      "sublabel": "IPC-7351, có trích trang",
+      "pos": [
+        330,
+        620
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "t_eda",
+      "type": "frontend",
+      "label": "KiCad CLI",
+      "sublabel": "ERC, DRC, jobset xuất",
+      "pos": [
+        530,
+        620
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "t_sim",
+      "type": "backend",
+      "label": "Mô phỏng",
+      "sublabel": "ngspice, IPC-2152",
+      "pos": [
+        730,
+        620
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "t_bom",
+      "type": "security",
+      "label": "Kiểm BOM",
+      "sublabel": "API phân phối, vòng đời",
+      "pos": [
+        930,
+        620
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "t_bench",
+      "type": "cloud",
+      "label": "Bench bring-up",
+      "sublabel": "nguồn, dao động ký, nhiệt",
+      "pos": [
+        1140,
+        620
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "fab",
+      "type": "cloud",
+      "label": "Nhà máy",
+      "sublabel": "mạch in + lắp ráp, theo rev",
+      "pos": [
+        1425,
+        620
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "bringup",
+      "type": "database",
+      "label": "Kết quả bring-up",
+      "sublabel": "đo đạc, rework, lỗi board",
+      "pos": [
+        1425,
+        760
+      ],
+      "size": [
+        180,
+        64
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Khối 1 · Tri thức PCB",
+      "wraps": [
+        "src_parts",
+        "src_appnotes",
+        "src_std",
+        "src_fab",
+        "b2s",
+        "kb_refs",
+        "kb_skills",
+        "kb_internal"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Khối 4 · Mô hình hoá domain",
+      "wraps": [
+        "domain"
+      ]
+    },
+    {
+      "kind": "security-group",
+      "label": "Khối 3 · Workflow",
+      "wraps": [
+        "orch",
+        "loop"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Khối 2 · Agent & công cụ",
+      "wraps": [
+        "t_edit",
+        "t_fp",
+        "t_eda",
+        "t_sim",
+        "t_bom",
+        "t_bench"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Sản xuất",
+      "wraps": [
+        "fab",
+        "bringup"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "parts-in",
+      "from": "src_parts",
+      "to": "b2s"
+    },
+    {
+      "id": "appnotes-in",
+      "from": "src_appnotes",
+      "to": "b2s"
+    },
+    {
+      "id": "std-in",
+      "from": "src_std",
+      "to": "b2s"
+    },
+    {
+      "id": "fab-in",
+      "from": "src_fab",
+      "to": "b2s"
+    },
+    {
+      "id": "extract",
+      "from": "b2s",
+      "to": "kb_refs",
+      "label": "extract"
+    },
+    {
+      "id": "distill",
+      "from": "b2s",
+      "to": "kb_skills",
+      "label": "distill"
+    },
+    {
+      "id": "pick-domain",
+      "from": "engineer",
+      "to": "domain",
+      "label": "chọn domain",
+      "variant": "emphasis"
+    },
+    {
+      "id": "generate",
+      "from": "domain",
+      "to": "orch",
+      "label": "sinh khung (1 lần)",
+      "variant": "emphasis"
+    },
+    {
+      "id": "assign",
+      "from": "orch",
+      "to": "loop",
+      "label": "giao board",
+      "variant": "emphasis"
+    },
+    {
+      "id": "deliver",
+      "from": "loop",
+      "to": "artefact",
+      "label": "rev + PASS",
+      "variant": "emphasis"
+    },
+    {
+      "id": "release",
+      "from": "artefact",
+      "to": "fab",
+      "label": "gửi sản xuất",
+      "variant": "emphasis"
+    },
+    {
+      "id": "boards",
+      "from": "fab",
+      "to": "bringup",
+      "label": "board thật",
+      "variant": "emphasis"
+    },
+    {
+      "id": "exact-facts",
+      "from": "kb_refs",
+      "to": "orch",
+      "label": "số liệu",
+      "toSide": "top"
+    },
+    {
+      "id": "rules",
+      "from": "kb_skills",
+      "to": "orch",
+      "label": "quy tắc"
+    },
+    {
+      "id": "history",
+      "from": "kb_internal",
+      "to": "loop",
+      "label": "errata, thư viện"
+    },
+    {
+      "id": "lessons",
+      "from": "bringup",
+      "to": "kb_internal",
+      "label": "lỗi → errata, rev sau",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "right"
+    },
+    {
+      "id": "use-edit",
+      "from": "loop",
+      "to": "t_edit",
+      "label": "sửa schematic",
+      "variant": "dashed"
+    },
+    {
+      "id": "use-eda",
+      "from": "loop",
+      "to": "t_eda",
+      "variant": "dashed"
+    },
+    {
+      "id": "use-sim",
+      "from": "loop",
+      "to": "t_sim",
+      "variant": "dashed"
+    },
+    {
+      "id": "use-bom",
+      "from": "loop",
+      "to": "t_bom",
+      "variant": "dashed"
+    },
+    {
+      "id": "use-bench",
+      "from": "loop",
+      "to": "t_bench",
+      "variant": "dashed"
+    },
+    {
+      "id": "use-fp",
+      "from": "loop",
+      "to": "t_fp",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Khối 1 · Tri thức PCB",
+      "items": [
+        "Datasheet và luật DFM: chỉ trích xuất (grep) kèm số trang; pinout và kích thước footprint không bao giờ lấy từ bản tóm tắt hay trí nhớ của model",
+        "App note, SI/PI, EMC, kinh nghiệm layout, checklist review của hãng chip: chưng cất thành skill",
+        "Tồn kho, giá, vòng đời linh kiện đổi theo tuần: tra API lúc dùng, kết quả ghi kèm ngày",
+        "Errata và nhật ký bring-up theo serial của từng rev là tri thức nội bộ quý nhất"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Khối 2 · Agent & công cụ",
+      "items": [
+        "Sửa thiết kế qua lớp có cấu trúc, không sửa tay .kicad_*: dạng code (SKiDL, atopile) sinh netlist hoặc schematic, còn placement và routing vẫn làm trong KiCad; chọn dạng nào chưa chốt",
+        "kicad-cli: ERC, DRC (JSON, exit code, parity với schematic), xuất gói sản xuất bằng jobset; chạy được trong CI, không cần giao diện",
+        "Sinh footprint bằng bộ sinh IPC-7351 từ bảng kích thước có trích trang; agent không tự vẽ pad",
+        "Tính toán: ngspice chạy riêng từ netlist, IPC-2152, trở kháng; PDN và openEMS chỉ để tham khảo",
+        "Kiểm BOM qua API phân phối (DigiKey, Mouser, jlcparts); bench bring-up đo trên board thật"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Khối 3 · Workflow",
+      "items": [
+        "Một vòng sản xuất mất nhiều tuần và tiền thật: dồn kiểm chứng về trước khi gửi nhà máy",
+        "Ba cổng người duyệt: chốt schematic, duyệt placement, chốt gửi sản xuất (sơ đồ 02)",
+        "Không có rollback: rework trên board hoặc làm rev mới (sơ đồ 03)"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Khối 4 · Mô hình hoá domain",
+      "items": [
+        "Domain Pack chỉ là bộ mặc định: nguồn, bước, luật DFM, checklist; dự án đổi tuỳ ý",
+        "Rev và serial board là khoá của mọi bằng chứng; đầu ra sinh ra phải khớp nguồn (sơ đồ 04)",
+        "Pin map, power tree chung với embedded-mcu; biên board chung với mechanical-design",
+        "Bài học đúng ở ≥ 2 dự án được đề xuất lên pack, người duyệt mới nhận"
+      ]
+    }
+  ]
+}

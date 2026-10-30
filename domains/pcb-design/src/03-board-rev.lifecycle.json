@@ -1,0 +1,223 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "Vòng đời một rev board PCB",
+    "locale": "vi",
+    "output": "domains/pcb-design/dist/03-board-rev.html",
+    "quality_profile": "showcase"
+  },
+  "mainPath": [
+    "open",
+    "sch_frozen",
+    "released",
+    "fabricating",
+    "bringup",
+    "validated"
+  ],
+  "states": [
+    {
+      "id": "open",
+      "type": "start",
+      "label": "Rev mở",
+      "sublabel": "schematic",
+      "tag": "draft",
+      "step": "01"
+    },
+    {
+      "id": "sch_frozen",
+      "type": "active",
+      "label": "Schematic chốt",
+      "sublabel": "rồi layout",
+      "tag": "cổng",
+      "step": "02"
+    },
+    {
+      "id": "released",
+      "type": "decision",
+      "label": "Chốt gửi SX",
+      "sublabel": "baseline 2",
+      "tag": "cổng",
+      "step": "03"
+    },
+    {
+      "id": "fabricating",
+      "type": "external",
+      "label": "Sản xuất",
+      "sublabel": "nhà máy",
+      "tag": "nhà máy",
+      "step": "04"
+    },
+    {
+      "id": "bringup",
+      "type": "active",
+      "label": "Bring-up",
+      "sublabel": "theo serial",
+      "tag": "bench",
+      "step": "05"
+    },
+    {
+      "id": "validated",
+      "type": "success",
+      "label": "Đạt",
+      "sublabel": "EVT/DVT",
+      "tag": "PASS",
+      "step": "06"
+    },
+    {
+      "id": "parts_blocked",
+      "type": "waiting",
+      "label": "Chờ linh kiện",
+      "sublabel": "hết hàng",
+      "tag": "BLOCKED"
+    },
+    {
+      "id": "eq_wait",
+      "type": "waiting",
+      "label": "Chờ EQ",
+      "sublabel": "email",
+      "tag": "email"
+    },
+    {
+      "id": "reworked",
+      "type": "active",
+      "label": "Rework",
+      "sublabel": "dây vá",
+      "tag": "nhật ký"
+    },
+    {
+      "id": "errata",
+      "type": "failure",
+      "label": "Cần rev mới",
+      "sublabel": "errata, ECO",
+      "tag": "FAIL"
+    },
+    {
+      "id": "superseded",
+      "type": "neutral",
+      "label": "Bị thay thế",
+      "sublabel": "giữ errata",
+      "tag": "kết thúc"
+    }
+  ],
+  "transitions": [
+    {
+      "id": "t-open-frozen",
+      "from": "open",
+      "to": "sch_frozen",
+      "label": "chốt"
+    },
+    {
+      "id": "t-frozen-released",
+      "from": "sch_frozen",
+      "to": "released",
+      "label": "chốt"
+    },
+    {
+      "id": "t-released-fab",
+      "from": "released",
+      "to": "fabricating",
+      "label": "đặt"
+    },
+    {
+      "id": "t-fab-bringup",
+      "from": "fabricating",
+      "to": "bringup",
+      "label": "nhận"
+    },
+    {
+      "id": "t-bringup-validated",
+      "from": "bringup",
+      "to": "validated",
+      "label": "PASS",
+      "variant": "emphasis"
+    },
+    {
+      "id": "t-frozen-open",
+      "from": "sch_frozen",
+      "to": "open",
+      "label": "ECO",
+      "variant": "security"
+    },
+    {
+      "id": "t-placed-blocked",
+      "from": "sch_frozen",
+      "to": "parts_blocked",
+      "label": "BLOCKED",
+      "variant": "security"
+    },
+    {
+      "id": "t-blocked-released",
+      "from": "parts_blocked",
+      "to": "released",
+      "label": "người quyết"
+    },
+    {
+      "id": "t-fab-eq",
+      "from": "fabricating",
+      "to": "eq_wait",
+      "label": "EQ",
+      "variant": "dashed"
+    },
+    {
+      "id": "t-eq-fab",
+      "from": "eq_wait",
+      "to": "fabricating",
+      "label": "trả lời"
+    },
+    {
+      "id": "t-bringup-rework",
+      "from": "bringup",
+      "to": "reworked",
+      "label": "sửa được"
+    },
+    {
+      "id": "t-rework-bringup",
+      "from": "reworked",
+      "to": "bringup",
+      "label": "đo lại"
+    },
+    {
+      "id": "t-bringup-errata",
+      "from": "bringup",
+      "to": "errata",
+      "label": "lỗi lớn",
+      "variant": "security"
+    },
+    {
+      "id": "t-errata-superseded",
+      "from": "errata",
+      "to": "superseded",
+      "label": "rev sau"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Rev là trục chính",
+      "items": [
+        "Mọi tài liệu và bằng chứng ghi rev nào: BOM, báo cáo DRC, errata, số đo bring-up",
+        "Hai baseline: lúc chốt schematic và lúc chốt gửi sản xuất; baseline 2 là bộ file đã gửi nhà máy, không sửa",
+        "Giữa hai lần chốt là layout: placement được duyệt riêng trước routing (sơ đồ 02)"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Trạng thái chờ người",
+      "items": [
+        "Chờ linh kiện: BOM lần 2 trả BLOCKED, người quyết đặt hàng vẫn, chờ, hay đổi linh kiện (mở ECO, quay về schematic)",
+        "Chờ EQ: nhà máy hỏi qua email, trả lời là quyết định của người; trả lời chậm thì giao hàng chậm",
+        "Deviation: nhận board lệch yêu cầu cho một dải serial, có hạn và người ký"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Không có rollback",
+      "items": [
+        "Board đã làm chỉ rework được; mỗi lần rework ghi vào nhật ký của serial đó",
+        "Lỗi lớn kết thúc rev bằng errata và ECO; rev sau nạp lại errata",
+        "Rev đã đạt cũng bị thay khi rev sau mở; rev cũ vẫn giữ errata vì board của nó còn ở ngoài"
+      ]
+    }
+  ]
+}

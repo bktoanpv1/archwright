@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "Vòng dữ liệu: từ hội thoại thật tới bộ eval",
+    "locale": "vi",
+    "output": "domains/llm-agent/dist/04-eval-flywheel.html",
+    "quality_profile": "showcase"
+  },
+  "stages": [
+    { "label": "Production" },
+    { "label": "Lọc, chọn mẫu" },
+    { "label": "Người gán nhãn" },
+    { "label": "Tập dữ liệu eval" },
+    { "label": "Ai dùng" }
+  ],
+  "nodes": [
+    { "id": "conv", "type": "cloud", "label": "Hội thoại thật", "sublabel": "trace có phiên bản", "stage": 0, "row": 0, "tag": "runtime" },
+    { "id": "feedback", "type": "external", "label": "Phản hồi", "sublabel": "đánh giá, khiếu nại", "stage": 0, "row": 2, "tag": "người dùng" },
+    { "id": "redact", "type": "security", "label": "Lọc PII, đồng ý", "sublabel": "trước khi rời app", "stage": 1, "row": 0, "tag": "bắt buộc" },
+    { "id": "online", "type": "backend", "label": "Eval online", "sublabel": "kiểm rẻ + judge mẫu", "stage": 1, "row": 2, "tag": "cờ" },
+    { "id": "queue", "type": "security", "label": "Chuyên gia gán nhãn", "sublabel": "open, axial coding", "stage": 2, "row": 1, "tag": "người" },
+    { "id": "known", "type": "database", "label": "Lỗi đã biết", "sublabel": "mẫu → nguyên nhân", "stage": 3, "row": 0, "tag": "docs" },
+    { "id": "devset", "type": "database", "label": "Eval dev", "sublabel": "builder đọc được", "stage": 3, "row": 1, "tag": "mở" },
+    { "id": "heldout", "type": "security", "label": "Eval held-out", "sublabel": "đóng băng", "stage": 3, "row": 2, "tag": "kín" },
+    { "id": "judge", "type": "database", "label": "Judge đã hiệu chỉnh", "sublabel": "TPR/TNR theo nhãn", "stage": 3, "row": 3, "tag": "mỗi dạng lỗi" },
+    { "id": "builder", "type": "backend", "label": "builder", "sublabel": "sửa prompt, code", "stage": 4, "row": 1, "tag": "agent" },
+    { "id": "verifier", "type": "backend", "label": "verifier", "sublabel": "PASS/FAIL/BLOCKED", "stage": 4, "row": 2, "tag": "agent" }
+  ],
+  "flows": [
+    { "id": "f-conv-redact", "from": "conv", "to": "redact", "label": "trace", "variant": "emphasis" },
+    { "id": "f-feedback-redact", "from": "feedback", "to": "redact", "label": "phản hồi" },
+    { "id": "f-redact-online", "from": "redact", "to": "online", "label": "trace đã lọc", "variant": "security" },
+    { "id": "f-redact-queue", "from": "redact", "to": "queue", "label": "mẫu ngẫu nhiên" },
+    { "id": "f-online-queue", "from": "online", "to": "queue", "label": "trace bị cờ", "variant": "emphasis" },
+    { "id": "f-queue-known", "from": "queue", "to": "known", "label": "dạng lỗi" },
+    { "id": "f-queue-dev", "from": "queue", "to": "devset", "label": "ca mới", "variant": "emphasis" },
+    { "id": "f-queue-heldout", "from": "queue", "to": "heldout", "label": "ca giữ kín", "variant": "security" },
+    { "id": "f-queue-judge", "from": "queue", "to": "judge", "label": "nhãn người" },
+    { "id": "f-known-builder", "from": "known", "to": "builder", "label": "lỗi cũ" },
+    { "id": "f-dev-builder", "from": "devset", "to": "builder", "label": "chỉ dev" },
+    { "id": "f-heldout-verifier", "from": "heldout", "to": "verifier", "label": "chỉ verifier", "variant": "security" },
+    { "id": "f-judge-verifier", "from": "judge", "to": "verifier", "label": "chấm" }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "Dữ liệu cá nhân",
+      "items": [
+        "Lọc PII trong SDK trước khi trace rời ứng dụng; thời hạn lưu đặt theo dự án",
+        "Đưa hội thoại vào bộ eval là một lần xử lý dữ liệu riêng, cần cơ sở pháp lý riêng; với trẻ em cần đồng ý của cha mẹ",
+        "Ca eval lưu bản đã lọc, không lưu bản gốc"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Người gán nhãn, agent soạn nháp",
+      "items": [
+        "Chuyên gia sản phẩm đọc trace, ghi nhận xét tự do, rồi gom thành dạng lỗi; agent chỉ gom cụm và đếm",
+        "Luôn trộn trace ngẫu nhiên với trace bị cờ, để thấy cả lỗi mà bộ chấm chưa biết",
+        "Mỗi dạng lỗi một judge nhị phân, hiệu chỉnh trên nhãn người; judge cũng chạy online trên mẫu"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Ai được đọc gì",
+      "items": [
+        "builder đọc eval dev và lỗi đã biết; không đọc, không ghi held-out và judge",
+        "verifier chạy held-out và judge; chỉ curator và người sửa được các tập này",
+        "Eval khả năng bão hoà thì chuyển sang bộ hồi quy, bộ này phải giữ gần 100%"
+      ]
+    }
+  ]
+}

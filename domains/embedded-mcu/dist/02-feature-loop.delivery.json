@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "08fa5715-d2ad-42e4-9b6e-187525b7f607",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "E:\\git\\archwright\\domains\\embedded-mcu\\src\\02-feature-loop.workflow.json",
+  "output": "E:\\git\\archwright\\domains\\embedded-mcu\\dist\\02-feature-loop.html",
+  "specification": {
+    "sha256": "c797e1b5a427a548baafab9f1471cff571182a4841ca41e28ef1d2686e23e00c",
+    "bytes": 7771
+  },
+  "artifact": {
+    "sha256": "d68b45193da9b059ef3fbbbe752749b6f3c7f46c34c25d90dc361b7bd1927536",
+    "bytes": 857870
+  }
+}

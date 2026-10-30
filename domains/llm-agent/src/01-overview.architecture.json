@@ -1,0 +1,498 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "archwright · domain LLM agent: sơ đồ tổng quan",
+    "locale": "vi",
+    "output": "domains/llm-agent/dist/01-overview.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "src_provider",
+      "type": "database",
+      "label": "Tài liệu nhà cung cấp model",
+      "sublabel": "API, giá, lịch ngừng model",
+      "pos": [
+        140,
+        40
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "src_books",
+      "type": "database",
+      "label": "Sách & nghiên cứu",
+      "sublabel": "prompt, thiết kế agent, eval",
+      "pos": [
+        380,
+        40
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "src_safety",
+      "type": "security",
+      "label": "Chính sách an toàn",
+      "sublabel": "OWASP, luật trẻ em, PII",
+      "pos": [
+        620,
+        40
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "src_proto",
+      "type": "database",
+      "label": "Giao thức & SDK",
+      "sublabel": "WebSocket, gRPC, tool schema",
+      "pos": [
+        860,
+        40
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "b2s",
+      "type": "backend",
+      "label": "book-to-skill",
+      "sublabel": "trích xuất + chưng cất",
+      "pos": [
+        500,
+        170
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "kb_refs",
+      "type": "database",
+      "label": "refs/*.txt",
+      "sublabel": "API, giá, lịch ngừng (grep)",
+      "pos": [
+        330,
+        300
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "kb_skills",
+      "type": "database",
+      "label": "Skills chuyên ngành",
+      "sublabel": "prompt, tool, eval, an toàn",
+      "pos": [
+        655,
+        300
+      ],
+      "size": [
+        200,
+        64
+      ]
+    },
+    {
+      "id": "kb_internal",
+      "type": "database",
+      "label": "Tri thức nội bộ",
+      "sublabel": "decisions · lỗi đã biết · eval",
+      "pos": [
+        1010,
+        300
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "engineer",
+      "type": "external",
+      "label": "Kỹ sư / PO",
+      "sublabel": "yêu cầu thay đổi",
+      "pos": [
+        40,
+        450
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "domain",
+      "type": "cloud",
+      "label": "Domain Pack: llm-agent",
+      "sublabel": "mặc định: nguồn · bước · eval",
+      "pos": [
+        320,
+        450
+      ],
+      "size": [
+        190,
+        64
+      ],
+      "tag": "mô hình hoá domain"
+    },
+    {
+      "id": "orch",
+      "type": "backend",
+      "label": "Agent điều phối",
+      "sublabel": "Claude Code đọc CLAUDE.md",
+      "pos": [
+        650,
+        450
+      ],
+      "size": [
+        210,
+        64
+      ]
+    },
+    {
+      "id": "loop",
+      "type": "backend",
+      "label": "Vòng lặp thay đổi",
+      "sublabel": "code · prompt · cấu hình",
+      "pos": [
+        1000,
+        450
+      ],
+      "size": [
+        200,
+        64
+      ],
+      "tag": "xem sơ đồ workflow"
+    },
+    {
+      "id": "artefact",
+      "type": "database",
+      "label": "Artefact có phiên bản",
+      "sublabel": "git · prompt registry · model",
+      "pos": [
+        1420,
+        450
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "t_redteam",
+      "type": "security",
+      "label": "Red team",
+      "sublabel": "promptfoo, garak, PyRIT",
+      "pos": [
+        530,
+        620
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "t_gitnexus",
+      "type": "backend",
+      "label": "gitnexus",
+      "sublabel": "đồ thị code, impact",
+      "pos": [
+        730,
+        620
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "t_eval",
+      "type": "security",
+      "label": "Eval harness",
+      "sublabel": "dev + held-out, judge, pass^k",
+      "pos": [
+        930,
+        620
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "t_obs",
+      "type": "backend",
+      "label": "Quan sát",
+      "sublabel": "OTel trace, eval online",
+      "pos": [
+        1140,
+        620
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "prod",
+      "type": "cloud",
+      "label": "Production",
+      "sublabel": "gateway: retry, dự phòng",
+      "pos": [
+        1425,
+        620
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "runtime",
+      "type": "database",
+      "label": "Trace & phản hồi",
+      "sublabel": "trace đã lọc PII, phản hồi",
+      "pos": [
+        1425,
+        760
+      ],
+      "size": [
+        180,
+        64
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Khối 1 · Tri thức LLM agent",
+      "wraps": [
+        "src_provider",
+        "src_books",
+        "src_safety",
+        "src_proto",
+        "b2s",
+        "kb_refs",
+        "kb_skills",
+        "kb_internal"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Khối 4 · Mô hình hoá domain",
+      "wraps": [
+        "domain"
+      ]
+    },
+    {
+      "kind": "security-group",
+      "label": "Khối 3 · Workflow",
+      "wraps": [
+        "orch",
+        "loop"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Khối 2 · Agent & công cụ",
+      "wraps": [
+        "t_redteam",
+        "t_gitnexus",
+        "t_eval",
+        "t_obs"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Vận hành",
+      "wraps": [
+        "prod",
+        "runtime"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "provider-in",
+      "from": "src_provider",
+      "to": "b2s"
+    },
+    {
+      "id": "books-in",
+      "from": "src_books",
+      "to": "b2s"
+    },
+    {
+      "id": "safety-in",
+      "from": "src_safety",
+      "to": "b2s"
+    },
+    {
+      "id": "proto-in",
+      "from": "src_proto",
+      "to": "b2s"
+    },
+    {
+      "id": "extract",
+      "from": "b2s",
+      "to": "kb_refs",
+      "label": "extract"
+    },
+    {
+      "id": "distill",
+      "from": "b2s",
+      "to": "kb_skills",
+      "label": "distill"
+    },
+    {
+      "id": "pick-domain",
+      "from": "engineer",
+      "to": "domain",
+      "label": "chọn domain",
+      "variant": "emphasis"
+    },
+    {
+      "id": "generate",
+      "from": "domain",
+      "to": "orch",
+      "label": "sinh khung (1 lần)",
+      "variant": "emphasis"
+    },
+    {
+      "id": "assign",
+      "from": "orch",
+      "to": "loop",
+      "label": "giao thay đổi",
+      "variant": "emphasis"
+    },
+    {
+      "id": "deliver",
+      "from": "loop",
+      "to": "artefact",
+      "label": "phiên bản + PASS",
+      "variant": "emphasis"
+    },
+    {
+      "id": "release",
+      "from": "artefact",
+      "to": "prod",
+      "label": "shadow, canary",
+      "variant": "emphasis"
+    },
+    {
+      "id": "trace",
+      "from": "prod",
+      "to": "runtime",
+      "label": "ghi trace",
+      "variant": "emphasis"
+    },
+    {
+      "id": "exact-facts",
+      "from": "kb_refs",
+      "to": "orch",
+      "label": "số liệu",
+      "toSide": "top"
+    },
+    {
+      "id": "rules",
+      "from": "kb_skills",
+      "to": "orch",
+      "label": "quy tắc"
+    },
+    {
+      "id": "history",
+      "from": "kb_internal",
+      "to": "loop",
+      "label": "lỗi cũ, bộ eval"
+    },
+    {
+      "id": "lessons",
+      "from": "runtime",
+      "to": "kb_internal",
+      "label": "người gán nhãn → ca eval",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "right"
+    },
+    {
+      "id": "use-redteam",
+      "from": "loop",
+      "to": "t_redteam",
+      "variant": "dashed"
+    },
+    {
+      "id": "use-gitnexus",
+      "from": "loop",
+      "to": "t_gitnexus",
+      "variant": "dashed"
+    },
+    {
+      "id": "use-eval",
+      "from": "loop",
+      "to": "t_eval",
+      "variant": "dashed"
+    },
+    {
+      "id": "use-obs",
+      "from": "loop",
+      "to": "t_obs",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Khối 1 · Tri thức LLM agent",
+      "items": [
+        "Tài liệu model và SDK: chỉ trích xuất, ghi ngày tra; tên model, giá, tham số, lịch ngừng hỗ trợ không bao giờ lấy từ trí nhớ của model",
+        "Kỹ thuật prompt, thiết kế agent và công cụ, eval: chưng cất thành skill",
+        "Nguồn lỗi thật là trace và phản hồi; chỉ dùng sau khi lọc PII, chuyên gia gán nhãn rồi mới thành ca eval",
+        "Luật về trẻ em và dữ liệu cá nhân (COPPA, EU AI Act, Luật BVDLCN 2025): chỉ giữ mã điều khoản và diễn giải nội bộ"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Khối 2 · Agent & công cụ",
+      "items": [
+        "Eval harness: bộ dev cho builder, bộ held-out đóng băng cho verifier, judge nhị phân đã hiệu chỉnh, chạy N lần báo pass^k",
+        "Red team trong CI theo OWASP LLM 2025 và OWASP Agentic 2026",
+        "Quan sát: trace theo OTel GenAI, ghi phiên bản prompt, snapshot model, commit; eval online trên mẫu",
+        "gitnexus: phân tích ảnh hưởng trước khi sửa code"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Khối 3 · Workflow",
+      "items": [
+        "Thay đổi ở code, prompt, cấu hình hay model đều đi cùng một vòng lặp (sơ đồ 02)",
+        "Chuyển nhãn prompt là phát hành: chỉ sau held-out PASS và người duyệt (sơ đồ 03)",
+        "Phát hành chưa phải kết thúc: shadow, canary, quan sát quyết giữ hay chuyển nhãn về"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Khối 4 · Mô hình hoá domain",
+      "items": [
+        "Domain Pack chỉ là bộ mặc định: nguồn, bước, ngưỡng eval, chính sách an toàn; dự án đổi tuỳ ý",
+        "Builder không được ghi bộ eval, judge và held-out: chặn bằng quyền, không chỉ dặn bằng lời",
+        "Vòng dữ liệu từ trace tới ca eval có cổng PII và người gán nhãn (sơ đồ 04)",
+        "Bài học đúng ở ≥ 2 dự án được đề xuất lên pack, người duyệt mới nhận"
+      ]
+    }
+  ]
+}

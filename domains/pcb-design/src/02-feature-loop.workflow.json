@@ -1,0 +1,394 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Vòng lặp agent thiết kế một rev board PCB",
+    "locale": "vi",
+    "output": "domains/pcb-design/dist/02-feature-loop.html",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "kb",
+      "label": "Tri thức"
+    },
+    {
+      "id": "human",
+      "label": "Kỹ sư · cổng duyệt"
+    },
+    {
+      "id": "agent",
+      "label": "Agent"
+    },
+    {
+      "id": "tools",
+      "label": "Công cụ & kiểm chứng"
+    }
+  ],
+  "phases": [
+    {
+      "id": "p_design",
+      "label": "Kiến trúc",
+      "fromCol": 0,
+      "toCol": 0
+    },
+    {
+      "id": "p_build",
+      "label": "Schematic + layout",
+      "fromCol": 1,
+      "toCol": 4,
+      "variant": "emphasis"
+    },
+    {
+      "id": "p_fab",
+      "label": "Sản xuất + bring-up",
+      "fromCol": 5,
+      "toCol": 5,
+      "variant": "dashed"
+    }
+  ],
+  "groups": [
+    {
+      "id": "g_gates",
+      "label": "Kiểm tự động (kicad-cli, API phân phối)",
+      "lane": "tools",
+      "fromCol": 1,
+      "toCol": 4,
+      "variant": "security"
+    }
+  ],
+  "mainPath": [
+    "req",
+    "spec",
+    "approve",
+    "sch",
+    "erc",
+    "signoff",
+    "place",
+    "approve_place",
+    "route",
+    "drc",
+    "review",
+    "package",
+    "release",
+    "fab",
+    "verdict",
+    "learn"
+  ],
+  "nodes": [
+    {
+      "id": "kb_read",
+      "lane": "kb",
+      "col": 0,
+      "type": "database",
+      "label": "refs · skills · decisions",
+      "sublabel": "datasheet, DFM, errata"
+    },
+    {
+      "id": "req",
+      "lane": "human",
+      "col": 0,
+      "type": "external",
+      "label": "Yêu cầu board",
+      "sublabel": "chức năng, biên, giá"
+    },
+    {
+      "id": "spec",
+      "lane": "agent",
+      "col": 0,
+      "type": "backend",
+      "label": "planner",
+      "sublabel": "khối, power tree, linh kiện"
+    },
+    {
+      "id": "approve",
+      "lane": "human",
+      "col": 1,
+      "type": "security",
+      "label": "Duyệt kiến trúc",
+      "sublabel": "linh kiện chính, giá"
+    },
+    {
+      "id": "sim",
+      "lane": "tools",
+      "col": 0,
+      "type": "backend",
+      "label": "Tính toán",
+      "sublabel": "SPICE, nguồn, IPC-2152"
+    },
+    {
+      "id": "sch",
+      "lane": "agent",
+      "col": 1,
+      "type": "backend",
+      "label": "builder",
+      "sublabel": "schematic + BOM + pin map"
+    },
+    {
+      "id": "erc",
+      "lane": "tools",
+      "col": 1,
+      "type": "security",
+      "label": "ERC · BOM lần 1",
+      "sublabel": "vòng đời, số nguồn"
+    },
+    {
+      "id": "signoff",
+      "lane": "human",
+      "col": 2,
+      "type": "security",
+      "label": "Chốt schematic",
+      "sublabel": "baseline + checklist"
+    },
+    {
+      "id": "place",
+      "lane": "agent",
+      "col": 2,
+      "type": "backend",
+      "label": "builder",
+      "sublabel": "stackup + placement"
+    },
+    {
+      "id": "approve_place",
+      "lane": "human",
+      "col": 3,
+      "type": "security",
+      "label": "Duyệt placement",
+      "sublabel": "nhiệt, EMC, cơ khí"
+    },
+    {
+      "id": "route",
+      "lane": "agent",
+      "col": 3,
+      "type": "backend",
+      "label": "builder",
+      "sublabel": "routing, đổ đồng"
+    },
+    {
+      "id": "drc",
+      "lane": "tools",
+      "col": 3,
+      "type": "security",
+      "label": "DRC · parity",
+      "sublabel": "luật nhà máy .kicad_dru"
+    },
+    {
+      "id": "review",
+      "lane": "agent",
+      "col": 4,
+      "type": "backend",
+      "label": "reviewer",
+      "sublabel": "nguồn, EMC, diff rev"
+    },
+    {
+      "id": "package",
+      "lane": "tools",
+      "col": 4,
+      "type": "security",
+      "label": "Gói SX · BOM lần 2",
+      "sublabel": "jobset, tồn kho, giá"
+    },
+    {
+      "id": "release",
+      "lane": "human",
+      "col": 4,
+      "type": "security",
+      "label": "Chốt gửi sản xuất",
+      "sublabel": "baseline, đặt hàng"
+    },
+    {
+      "id": "fab",
+      "lane": "tools",
+      "col": 5,
+      "type": "cloud",
+      "label": "Sản xuất + bring-up",
+      "sublabel": "EQ, nhiều tuần, tiền thật"
+    },
+    {
+      "id": "verdict",
+      "lane": "agent",
+      "col": 5,
+      "type": "backend",
+      "label": "verifier",
+      "sublabel": "checklist theo serial"
+    },
+    {
+      "id": "learn",
+      "lane": "kb",
+      "col": 5,
+      "type": "database",
+      "label": "curator",
+      "sublabel": "errata, rework, ECO"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-req-spec",
+      "from": "req",
+      "to": "spec",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-kb-spec",
+      "from": "kb_read",
+      "to": "spec",
+      "label": "nạp tri thức",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e-spec-sim",
+      "from": "spec",
+      "to": "sim",
+      "label": "kiểm số",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e-spec-approve",
+      "from": "spec",
+      "to": "approve",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-approve-sch",
+      "from": "approve",
+      "to": "sch",
+      "label": "đồng ý",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-sch-erc",
+      "from": "sch",
+      "to": "erc",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-erc-signoff",
+      "from": "erc",
+      "to": "signoff",
+      "label": "sạch",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-signoff-place",
+      "from": "signoff",
+      "to": "place",
+      "label": "chốt",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-place-approve",
+      "from": "place",
+      "to": "approve_place",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-approveplace-route",
+      "from": "approve_place",
+      "to": "route",
+      "label": "đồng ý",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-route-drc",
+      "from": "route",
+      "to": "drc",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-drc-review",
+      "from": "drc",
+      "to": "review",
+      "label": "sạch",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-review-package",
+      "from": "review",
+      "to": "package",
+      "label": "chấp nhận",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-package-release",
+      "from": "package",
+      "to": "release",
+      "label": "PASS / BLOCKED",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-release-fab",
+      "from": "release",
+      "to": "fab",
+      "label": "đặt hàng",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-fab-verdict",
+      "from": "fab",
+      "to": "verdict",
+      "label": "số đo",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-verdict-learn",
+      "from": "verdict",
+      "to": "learn",
+      "label": "PASS / FAIL",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-drc-fail",
+      "from": "drc",
+      "to": "route",
+      "label": "vi phạm",
+      "variant": "security",
+      "role": "error"
+    },
+    {
+      "id": "e-review-fail",
+      "from": "review",
+      "to": "route",
+      "label": "cần sửa",
+      "variant": "security",
+      "role": "error"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Khác domain phần mềm ở đâu",
+      "items": [
+        "Kiểm chứng thật (board thật) mất nhiều tuần và tiền: mọi kiểm tra rẻ phải xong trước khi đặt hàng",
+        "Ba lần thực hiện nối tiếp: schematic, placement, routing; mỗi lần có cổng riêng và đổi về sau đắt dần",
+        "Không rollback được: lỗi nhỏ thì rework trên board, lỗi lớn thì làm rev mới"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Ba cổng người duyệt",
+      "items": [
+        "Chốt schematic: baseline; sau đó đổi linh kiện hay kết nối là phải làm lại layout",
+        "Duyệt placement: stackup, nhiệt, EMC, biên và lỗ bắt vít (cùng kỹ sư cơ khí) được quyết ở đây, trước khi routing",
+        "Chốt gửi sản xuất: duyệt gói Gerber/IPC-2581, BOM, giá, thời gian giao; trả lời EQ của nhà máy cũng là quyết định của người"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Kiểm BOM hai lần",
+      "items": [
+        "Lần 1 lúc chốt schematic: vòng đời (NRND/EOL), số nguồn, linh kiện thay thế, khi layout còn đổi được",
+        "Lần 2 trong gói sản xuất: tồn kho, lead time, giá theo số lượng; hết hàng thì BLOCKED, người quyết đổi linh kiện, chờ hay ký deviation"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Đường quay lại",
+      "items": [
+        "ERC/BOM lỗi về builder schematic; placement bị từ chối về builder placement; DRC vi phạm và review yêu cầu sửa về builder routing",
+        "Bring-up FAIL: lỗi sửa được thì rework và ghi nhật ký theo serial; lỗi lớn thì curator mở ECO, rev mới bắt đầu lại từ planner (sơ đồ 03)"
+      ]
+    }
+  ]
+}

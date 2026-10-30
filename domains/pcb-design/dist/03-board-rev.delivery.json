@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "b624dbe4-24bc-4b28-8ed4-65e0805b35e6",
+  "status": "current",
+  "command": "deliver",
+  "type": "lifecycle",
+  "input": "E:\\git\\archwright\\domains\\pcb-design\\src\\03-board-rev.lifecycle.json",
+  "output": "E:\\git\\archwright\\domains\\pcb-design\\dist\\03-board-rev.html",
+  "specification": {
+    "sha256": "51688884c2f089c3959dacb3e1c7b7a881d421f6ce40562782b1c559a490db4a",
+    "bytes": 5355
+  },
+  "artifact": {
+    "sha256": "b70cfc173925447a1d4aaf42ba0eb9184c1e177fa8e9128c0665641afed52c35",
+    "bytes": 852844
+  }
+}

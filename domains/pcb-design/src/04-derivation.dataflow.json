@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "Chuỗi dẫn xuất artefact của một rev board",
+    "locale": "vi",
+    "output": "domains/pcb-design/dist/04-derivation.html",
+    "quality_profile": "showcase"
+  },
+  "stages": [
+    { "label": "Nguồn đã kiểm" },
+    { "label": "Thiết kế (sửa tay)" },
+    { "label": "Dẫn xuất (sinh ra)" },
+    { "label": "Đóng gói rev" },
+    { "label": "Bên nhận" }
+  ],
+  "nodes": [
+    { "id": "refs", "type": "database", "label": "refs/*.txt", "sublabel": "bảng chân, kích thước", "stage": 0, "row": 0, "tag": "trích trang" },
+    { "id": "lib", "type": "database", "label": "Thư viện", "sublabel": "symbol, footprint IPC-7351", "stage": 0, "row": 1, "tag": "đã kiểm" },
+    { "id": "dru", "type": "security", "label": "Luật nhà máy", "sublabel": ".kicad_dru ghim bản", "stage": 0, "row": 2, "tag": "DFM" },
+    { "id": "outline", "type": "external", "label": "Biên cơ khí", "sublabel": "DXF, lỗ vít, cổng", "stage": 0, "row": 3, "tag": "mechanical" },
+    { "id": "sch", "type": "backend", "label": "Schematic", "sublabel": ".kicad_sch", "stage": 1, "row": 0, "tag": "builder" },
+    { "id": "pcb", "type": "backend", "label": "Layout", "sublabel": ".kicad_pcb + stackup", "stage": 1, "row": 2, "tag": "builder" },
+    { "id": "bom", "type": "database", "label": "BOM", "sublabel": "MPN, thay thế, DNP", "stage": 2, "row": 0, "tag": "sinh + sửa" },
+    { "id": "pinmap", "type": "database", "label": "Pin map, power tree", "sublabel": "giao diện với firmware", "stage": 2, "row": 1, "tag": "chung" },
+    { "id": "fabout", "type": "database", "label": "Gói sản xuất", "sublabel": "Gerber/IPC-2581, khoan, PnP", "stage": 2, "row": 2, "tag": "jobset" },
+    { "id": "step", "type": "database", "label": "Mô hình 3D", "sublabel": "STEP", "stage": 2, "row": 3, "tag": "sinh ra" },
+    { "id": "manifest", "type": "security", "label": "Manifest rev", "sublabel": "hash nguồn → đầu ra", "stage": 3, "row": 2, "tag": "baseline" },
+    { "id": "buy", "type": "security", "label": "Kiểm BOM, mua", "sublabel": "API phân phối", "stage": 4, "row": 0, "tag": "tra lúc dùng" },
+    { "id": "fw", "type": "external", "label": "Firmware", "sublabel": "embedded-mcu", "stage": 4, "row": 1, "tag": "domain khác" },
+    { "id": "fab", "type": "cloud", "label": "Nhà máy", "sublabel": "mạch in + lắp ráp", "stage": 4, "row": 2, "tag": "đặt hàng" },
+    { "id": "mech", "type": "external", "label": "Cơ khí", "sublabel": "mechanical-design", "stage": 4, "row": 3, "tag": "domain khác" }
+  ],
+  "flows": [
+    { "id": "f-refs-lib", "from": "refs", "to": "lib", "label": "bảng kích thước" },
+    { "id": "f-lib-sch", "from": "lib", "to": "sch", "label": "symbol" },
+    { "id": "f-lib-pcb", "from": "lib", "to": "pcb", "label": "footprint" },
+    { "id": "f-dru-pcb", "from": "dru", "to": "pcb", "label": "luật DRC", "variant": "security" },
+    { "id": "f-outline-pcb", "from": "outline", "to": "pcb", "label": "biên, lỗ vít" },
+    { "id": "f-sch-pcb", "from": "sch", "to": "pcb", "label": "netlist", "variant": "emphasis" },
+    { "id": "f-sch-bom", "from": "sch", "to": "bom", "label": "BOM, biến thể" },
+    { "id": "f-sch-pinmap", "from": "sch", "to": "pinmap", "label": "chân, rail" },
+    { "id": "f-pcb-fabout", "from": "pcb", "to": "fabout", "label": "kicad-cli xuất", "variant": "emphasis" },
+    { "id": "f-pcb-step", "from": "pcb", "to": "step", "label": "xuất STEP" },
+    { "id": "f-bom-manifest", "from": "bom", "to": "manifest", "label": "BOM + hash" },
+    { "id": "f-fabout-manifest", "from": "fabout", "to": "manifest", "label": "file + hash", "variant": "emphasis" },
+    { "id": "f-manifest-fab", "from": "manifest", "to": "fab", "label": "gói đã chốt", "variant": "emphasis" },
+    { "id": "f-bom-buy", "from": "bom", "to": "buy", "label": "MPN, số lượng" },
+    { "id": "f-pinmap-fw", "from": "pinmap", "to": "fw", "label": "pin map" },
+    { "id": "f-step-mech", "from": "step", "to": "mech", "label": "STEP board" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Đầu ra không được cũ hơn nguồn",
+      "items": [
+        "Mỗi file dẫn xuất ghi derived_from: file nguồn và hash của nó",
+        "Manifest rev liệt kê nguồn và đầu ra; nguồn đổi mà đầu ra chưa sinh lại thì verifier trả FAIL",
+        "DRC --schematic-parity kiểm layout khớp schematic; hash kiểm Gerber khớp layout"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Sinh ra, rồi sửa tay",
+      "items": [
+        "BOM và pin map sinh từ schematic rồi bổ sung tay (linh kiện thay thế, DNP, tên tín hiệu cho firmware)",
+        "Phần sửa tay nằm ở file riêng hoặc trường riêng, để sinh lại không xoá mất",
+        "Gerber, PnP, STEP chỉ sinh ra: agent không sửa tay, chỉ sinh lại bằng jobset"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Artefact chung giữa domain",
+      "items": [
+        "Pin map, power tree: pcb-design sở hữu, embedded-mcu đọc; đổi cần người duyệt của cả hai",
+        "Biên board, lỗ vít: mechanical-design sở hữu, pcb-design đọc; STEP board đi ngược lại để kiểm va chạm",
+        "Tồn kho, giá không lưu thành file: tra lúc dùng, kết quả kiểm ghi kèm ngày"
+      ]
+    }
+  ]
+}

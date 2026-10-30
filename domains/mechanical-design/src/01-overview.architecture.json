@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "archwright · domain thiết kế cơ khí: sơ đồ tổng quan",
+    "locale": "vi",
+    "output": "domains/mechanical-design/dist/01-overview.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    { "id": "src_material", "type": "database", "label": "Datasheet vật liệu", "sublabel": "co ngót, độ bền, UL 94", "pos": [140, 40], "size": [200, 64] },
+    { "id": "src_guides", "type": "database", "label": "Hướng dẫn DFM", "sublabel": "ép phun, in 3D, CNC", "pos": [380, 40], "size": [200, 64] },
+    { "id": "src_std", "type": "security", "label": "Tiêu chuẩn sản phẩm", "sublabel": "IP · thử rơi · an toàn đồ chơi", "pos": [620, 40], "size": [200, 64] },
+    { "id": "src_supplier", "type": "database", "label": "Năng lực nhà cung cấp", "sublabel": "dung sai, giá khuôn, STEP", "pos": [860, 40], "size": [200, 64] },
+    { "id": "b2s", "type": "backend", "label": "book-to-skill", "sublabel": "trích xuất + chưng cất", "pos": [500, 170], "size": [200, 64] },
+    { "id": "kb_refs", "type": "database", "label": "refs/*.txt", "sublabel": "vật liệu, dung sai (grep)", "pos": [330, 300], "size": [200, 64] },
+    { "id": "kb_skills", "type": "database", "label": "Skills chuyên ngành", "sublabel": "thiết kế nhựa, lắp ghép, GD&T", "pos": [655, 300], "size": [200, 64] },
+    { "id": "kb_internal", "type": "database", "label": "Tri thức nội bộ", "sublabel": "decisions · lỗi mẫu · luật DFM", "pos": [1010, 300], "size": [180, 64] },
+    { "id": "engineer", "type": "external", "label": "Kỹ sư / PO", "sublabel": "yêu cầu vỏ", "pos": [40, 450], "size": [150, 64] },
+    { "id": "domain", "type": "cloud", "label": "Domain Pack: mechanical-design", "sublabel": "mặc định: nguồn · bước · luật", "pos": [320, 450], "size": [200, 64], "tag": "mô hình hoá domain" },
+    { "id": "orch", "type": "backend", "label": "Agent điều phối", "sublabel": "Claude Code đọc CLAUDE.md", "pos": [650, 450], "size": [210, 64] },
+    { "id": "loop", "type": "backend", "label": "Vòng lặp một mẫu vỏ", "sublabel": "kiểu dáng → CAD → mẫu thử", "pos": [1000, 450], "size": [200, 64], "tag": "xem sơ đồ workflow" },
+    { "id": "artefact", "type": "database", "label": "Mô hình có phiên bản", "sublabel": "CAD · bản vẽ · BOM cơ khí · CMF", "pos": [1420, 450], "size": [190, 64] },
+    { "id": "t_cad", "type": "frontend", "label": "Code-CAD", "sublabel": "CadQuery, FreeCAD, STEP", "pos": [530, 620], "size": [170, 64] },
+    { "id": "t_geo", "type": "security", "label": "Kiểm hình học", "sublabel": "va chạm, thành, góc thoát", "pos": [730, 620], "size": [170, 64] },
+    { "id": "t_fea", "type": "backend", "label": "Mô phỏng", "sublabel": "FEA rơi, ứng suất", "pos": [930, 620], "size": [180, 64] },
+    { "id": "t_print", "type": "cloud", "label": "In 3D", "sublabel": "mẫu lắp thử nhanh", "pos": [1140, 620], "size": [170, 64] },
+    { "id": "tooling", "type": "cloud", "label": "Nhà làm khuôn", "sublabel": "khuôn ép, mẫu T0/T1", "pos": [1425, 620], "size": [180, 64] },
+    { "id": "samples", "type": "database", "label": "Kết quả mẫu", "sublabel": "lắp ráp, rơi, IP, ngoại quan", "pos": [1425, 760], "size": [180, 64] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Khối 1 · Tri thức vỏ sản phẩm", "wraps": ["src_material", "src_guides", "src_std", "src_supplier", "b2s", "kb_refs", "kb_skills", "kb_internal"] },
+    { "kind": "region", "label": "Khối 4 · Mô hình hoá domain", "wraps": ["domain"] },
+    { "kind": "security-group", "label": "Khối 3 · Workflow", "wraps": ["orch", "loop"] },
+    { "kind": "region", "label": "Khối 2 · Agent & công cụ", "wraps": ["t_cad", "t_geo", "t_fea", "t_print"] },
+    { "kind": "region", "label": "Sản xuất", "wraps": ["tooling", "samples"] }
+  ],
+  "connections": [
+    { "id": "material-in", "from": "src_material", "to": "b2s" },
+    { "id": "guides-in", "from": "src_guides", "to": "b2s" },
+    { "id": "std-in", "from": "src_std", "to": "b2s" },
+    { "id": "supplier-in", "from": "src_supplier", "to": "b2s" },
+    { "id": "extract", "from": "b2s", "to": "kb_refs", "label": "extract" },
+    { "id": "distill", "from": "b2s", "to": "kb_skills", "label": "distill" },
+    { "id": "pick-domain", "from": "engineer", "to": "domain", "label": "chọn domain", "variant": "emphasis" },
+    { "id": "generate", "from": "domain", "to": "orch", "label": "sinh khung (1 lần)", "variant": "emphasis" },
+    { "id": "assign", "from": "orch", "to": "loop", "label": "giao mẫu vỏ", "variant": "emphasis" },
+    { "id": "deliver", "from": "loop", "to": "artefact", "label": "phiên bản + PASS", "variant": "emphasis" },
+    { "id": "release", "from": "artefact", "to": "tooling", "label": "chốt làm khuôn", "variant": "emphasis" },
+    { "id": "samples-out", "from": "tooling", "to": "samples", "label": "mẫu T1", "variant": "emphasis" },
+    { "id": "exact-facts", "from": "kb_refs", "to": "orch", "label": "số liệu", "toSide": "top" },
+    { "id": "rules", "from": "kb_skills", "to": "orch", "label": "quy tắc" },
+    { "id": "history", "from": "kb_internal", "to": "loop", "label": "lỗi mẫu cũ" },
+    { "id": "lessons", "from": "samples", "to": "kb_internal", "label": "lỗi → luật DFM", "variant": "dashed", "fromSide": "right", "toSide": "right" },
+    { "id": "use-cad", "from": "loop", "to": "t_cad", "variant": "dashed" },
+    { "id": "use-geo", "from": "loop", "to": "t_geo", "variant": "dashed" },
+    { "id": "use-fea", "from": "loop", "to": "t_fea", "variant": "dashed" },
+    { "id": "use-print", "from": "loop", "to": "t_print", "variant": "dashed" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Khối 1 · Tri thức vỏ sản phẩm",
+      "items": [
+        "Thông số vật liệu, dung sai nhà cung cấp: chỉ trích xuất (grep) kèm số trang",
+        "Kinh nghiệm thiết kế nhựa (thành đều, gân, góc thoát khuôn, lẫy gài): chưng cất thành skill",
+        "Tiêu chuẩn chọn theo sản phẩm: IP, thử rơi, chống cháy, an toàn đồ chơi khi người dùng là trẻ em",
+        "Lỗi của từng lần mẫu thử trở thành luật DFM nội bộ"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Khối 2 · Agent & công cụ",
+      "items": [
+        "Code-CAD (CadQuery, FreeCAD script): mô hình tham số agent sửa và review được như code",
+        "Kiểm hình học: va chạm với PCB, khe hở, độ dày thành, góc thoát khuôn",
+        "Mô phỏng: FEA thử rơi và ứng suất ở lẫy gài, trụ bắt vít",
+        "In 3D: mẫu lắp thử trong vài giờ, rẻ, để thử lắp ráp và cảm giác nút bấm"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Khối 3 · Workflow",
+      "items": [
+        "Hai tầng mẫu vật lý: in 3D nhanh và rẻ, rồi khuôn ép chậm và rất đắt",
+        "Kiểu dáng và màu sắc là phán đoán của người; agent lo tham số, kiểm tra, bản vẽ",
+        "Sau khi làm khuôn: chỉ sửa theo hướng bớt thép (steel safe), không rollback"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Khối 4 · Mô hình hoá domain",
+      "items": [
+        "Domain Pack chỉ là bộ mặc định: nguồn, bước, luật DFM; dự án đổi tuỳ ý",
+        "Biên PCB, lỗ bắt vít, vị trí cổng và nút là artefact chung với domain pcb-design",
+        "Bài học đúng ở ≥ 2 dự án được đề xuất lên pack, người duyệt mới nhận"
+      ]
+    }
+  ]
+}

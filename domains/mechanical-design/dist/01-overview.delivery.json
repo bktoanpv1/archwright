@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "2826ab30-5986-4931-946a-606f0ce515e3",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "E:\\git\\archwright\\domains\\mechanical-design\\src\\01-overview.architecture.json",
+  "output": "E:\\git\\archwright\\domains\\mechanical-design\\dist\\01-overview.html",
+  "specification": {
+    "sha256": "87d234ae5a139976f449baad6be0c9e4306f1199260be308cfe90cf1c0c79a9d",
+    "bytes": 7806
+  },
+  "artifact": {
+    "sha256": "db2d630483a97ca93f72e5a567b7adce78b2e0892d4d0d21e85a3eaab0f09cd7",
+    "bytes": 874731
+  }
+}

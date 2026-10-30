@@ -1,0 +1,66 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "Vòng đời một phiên bản prompt, cấu hình hoặc model",
+    "locale": "vi",
+    "output": "domains/llm-agent/dist/03-version.html",
+    "quality_profile": "showcase"
+  },
+  "mainPath": ["draft", "dev_ok", "approved", "canary", "production"],
+  "states": [
+    { "id": "draft", "type": "start", "label": "Bản nháp", "sublabel": "bất biến khi lưu", "tag": "builder", "step": "01" },
+    { "id": "dev_ok", "type": "decision", "label": "Qua eval dev", "sublabel": "chờ held-out", "tag": "verifier", "step": "02" },
+    { "id": "approved", "type": "active", "label": "Đã duyệt", "sublabel": "held-out PASS", "tag": "người", "step": "03" },
+    { "id": "canary", "type": "active", "label": "Shadow, canary", "sublabel": "nhãn thử", "tag": "quan sát", "step": "04" },
+    { "id": "production", "type": "success", "label": "Production", "sublabel": "nhãn production", "tag": "đang phục vụ", "step": "05" },
+    { "id": "blocked", "type": "waiting", "label": "BLOCKED", "sublabel": "hết quota", "tag": "người quyết" },
+    { "id": "rolled_back", "type": "failure", "label": "Đã rollback", "sublabel": "nhãn về bản cũ", "tag": "sự cố" },
+    { "id": "migrate", "type": "waiting", "label": "Chờ đổi model", "sublabel": "lịch ngừng", "tag": "nhà cung cấp" },
+    { "id": "superseded", "type": "neutral", "label": "Bị thay thế", "sublabel": "giữ để so", "tag": "kết thúc" }
+  ],
+  "transitions": [
+    { "id": "t-draft-dev", "from": "draft", "to": "dev_ok", "label": "dev xanh" },
+    { "id": "t-dev-approved", "from": "dev_ok", "to": "approved", "label": "PASS + duyệt" },
+    { "id": "t-approved-canary", "from": "approved", "to": "canary", "label": "bật" },
+    { "id": "t-canary-prod", "from": "canary", "to": "production", "label": "chuyển nhãn", "variant": "emphasis" },
+    { "id": "t-dev-draft", "from": "dev_ok", "to": "draft", "label": "FAIL", "variant": "security" },
+    { "id": "t-dev-blocked", "from": "dev_ok", "to": "blocked", "label": "không chạy được", "variant": "dashed" },
+    { "id": "t-blocked-approved", "from": "blocked", "to": "approved", "label": "người nhận" },
+    { "id": "t-canary-rollback", "from": "canary", "to": "rolled_back", "label": "xấu đi", "variant": "security" },
+    { "id": "t-prod-rollback", "from": "production", "to": "rolled_back", "label": "sự cố", "variant": "security" },
+    { "id": "t-rollback-draft", "from": "rolled_back", "to": "draft", "label": "sửa" },
+    { "id": "t-prod-migrate", "from": "production", "to": "migrate", "label": "báo ngừng", "variant": "dashed" },
+    { "id": "t-migrate-draft", "from": "migrate", "to": "draft", "label": "bản mới" },
+    { "id": "t-prod-superseded", "from": "production", "to": "superseded", "label": "bản sau" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Phiên bản và nhãn",
+      "items": [
+        "Mỗi phiên bản prompt, cấu hình bot hay lựa chọn model là bất biến; trạng thái nằm ở nhãn trỏ vào nó",
+        "Chuyển nhãn production là một lần phát hành, dù không qua git: chỉ sau held-out PASS và người duyệt, nhãn được bảo vệ",
+        "Mọi trace ghi phiên bản prompt, snapshot model, hash cấu hình và commit, để đo chỉ số theo phiên bản"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Sự kiện từ bên ngoài",
+      "items": [
+        "Nhà cung cấp báo ngừng model (Anthropic ít nhất 60 ngày, OpenAI ít nhất 6 tháng với bản GA, preview chỉ khoảng 2 tuần)",
+        "Đổi model là bản mới: kiểm thay đổi API, chạy lại eval ở vài mức effort, tính lại chi phí và độ trễ",
+        "Ghim snapshot có ngày, không dùng alias latest ở production"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Rollback rẻ, nhưng có điều kiện",
+      "items": [
+        "Rollback là chuyển nhãn về bản trước, client nhận khi cache prompt làm mới",
+        "Chỉ rollback được khi bản cũ còn chạy với model và công cụ hiện tại; model đã retire thì không quay về được",
+        "Bản bị thay vẫn giữ để so sánh và tái hiện lỗi cũ"
+      ]
+    }
+  ]
+}

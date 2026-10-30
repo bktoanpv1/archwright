@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "26eed98c-b603-481e-99bd-931302e595a5",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "E:\\git\\archwright\\domains\\llm-agent\\src\\02-feature-loop.workflow.json",
+  "output": "E:\\git\\archwright\\domains\\llm-agent\\dist\\02-feature-loop.html",
+  "specification": {
+    "sha256": "c9f5e18c319667047d0987418895dbf80b58838fbeceb90c1e2b54cfa115e7d7",
+    "bytes": 8482
+  },
+  "artifact": {
+    "sha256": "ce6809540f0eba40cf87012501b38547d894987807878022ba8161ae7fea50d2",
+    "bytes": 860258
+  }
+}

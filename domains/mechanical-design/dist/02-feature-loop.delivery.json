@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "010cd391-020a-4eca-ac32-720ce12d9927",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "E:\\git\\archwright\\domains\\mechanical-design\\src\\02-feature-loop.workflow.json",
+  "output": "E:\\git\\archwright\\domains\\mechanical-design\\dist\\02-feature-loop.html",
+  "specification": {
+    "sha256": "d9b2cbbd3807bfd811351a091fa1db09c5cd061a90e68049129c181462226cb4",
+    "bytes": 7615
+  },
+  "artifact": {
+    "sha256": "ac0384b5ed3405e36d8968c3c6b7e62d56c918ec0474b083a046064c5268a11f",
+    "bytes": 858601
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "bb207462-c5b5-4c6d-abb6-8d54aff30e61",
+  "status": "current",
+  "command": "deliver",
+  "type": "dataflow",
+  "input": "E:\\git\\archwright\\domains\\llm-agent\\src\\04-eval-flywheel.dataflow.json",
+  "output": "E:\\git\\archwright\\domains\\llm-agent\\dist\\04-eval-flywheel.html",
+  "specification": {
+    "sha256": "a468fd58f1affe479536ce749bff28a6991b3e3b9701dc9b81f1a8660a5acffc",
+    "bytes": 4838
+  },
+  "artifact": {
+    "sha256": "dcbcdfd34490ebc2f3e3974eb8cd2e7e96f2ac177e6ceafdd2a9b80c6911cb87",
+    "bytes": 847088
+  }
+}

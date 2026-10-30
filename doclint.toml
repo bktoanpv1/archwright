@@ -1,0 +1,18 @@
+# Profile doclint của chính repo archwright (form riêng của repo, ngoài form core).
+# Chạy: python kit/core/tools/doclint.py docs/ --config doclint.toml
+
+[[doc_form]]
+id = "paper-test"              # thử giấy: xếp một domain vào đề xuất, ghi lỗ hổng
+type = "report"
+extends = "review-report"
+
+[[doc_form]]
+id = "research-report"         # nghiên cứu: tổng hợp nguồn, kết luận, đề xuất
+type = "report"
+extends = "review-report"
+required_sections = ["Nguồn"]
+
+[[doc_form]]
+id = "form-spec"               # đặc tả một form: trường, luật doclint, mẫu
+type = "specification"
+required_sections = ["Trường", "Luật cho `doclint`", "Mẫu"]

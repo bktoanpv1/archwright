@@ -1,0 +1,41 @@
+# Repo tham khảo clone về máy (mỗi thư mục là một git repo riêng)
+repositories/
+
+# Cấu hình editor theo máy
+.vscode/
+.idea/
+*.code-workspace
+
+# Biên nhận kiểm tra của archify (sinh lại mỗi lần build)
+.receipts/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# Biến môi trường, bí mật
+.env
+.env.*
+!.env.example
+
+# Log, file tạm
+*.log
+*.tmp
+*.bak
+*.swp
+
+# File hệ điều hành
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Cấu hình Claude Code cục bộ
+.claude/settings.local.json
+
+# Log và snapshot của Playwright MCP
+.playwright-mcp/

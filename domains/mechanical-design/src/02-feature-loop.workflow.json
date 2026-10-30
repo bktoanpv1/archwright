@@ -1,0 +1,340 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Vòng lặp agent thiết kế một mẫu vỏ sản phẩm",
+    "locale": "vi",
+    "output": "domains/mechanical-design/dist/02-feature-loop.html",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "kb",
+      "label": "Tri thức"
+    },
+    {
+      "id": "human",
+      "label": "Kỹ sư · cổng duyệt"
+    },
+    {
+      "id": "agent",
+      "label": "Agent"
+    },
+    {
+      "id": "tools",
+      "label": "Công cụ & kiểm chứng"
+    }
+  ],
+  "phases": [
+    {
+      "id": "p_design",
+      "label": "Kiểu dáng + kiến trúc",
+      "fromCol": 0,
+      "toCol": 1
+    },
+    {
+      "id": "p_build",
+      "label": "CAD + mẫu in 3D",
+      "fromCol": 2,
+      "toCol": 4,
+      "variant": "emphasis"
+    },
+    {
+      "id": "p_tooling",
+      "label": "Khuôn + mẫu T1",
+      "fromCol": 5,
+      "toCol": 5,
+      "variant": "dashed"
+    }
+  ],
+  "groups": [
+    {
+      "id": "g_gates",
+      "label": "Kiểm chứng sớm",
+      "lane": "tools",
+      "fromCol": 2,
+      "toCol": 3,
+      "variant": "security"
+    }
+  ],
+  "mainPath": [
+    "req",
+    "spec",
+    "approve",
+    "cad",
+    "geo",
+    "review",
+    "proto",
+    "verdict",
+    "freeze",
+    "tooling",
+    "verdict_t1",
+    "learn"
+  ],
+  "nodes": [
+    {
+      "id": "kb_read",
+      "lane": "kb",
+      "col": 0,
+      "type": "database",
+      "label": "Tri thức dự án",
+      "sublabel": "vật liệu, DFM, lỗi mẫu"
+    },
+    {
+      "id": "req",
+      "lane": "human",
+      "col": 0,
+      "type": "external",
+      "label": "Yêu cầu vỏ",
+      "sublabel": "PCB, kích thước, IP, giá"
+    },
+    {
+      "id": "spec",
+      "lane": "agent",
+      "col": 1,
+      "type": "backend",
+      "label": "planner",
+      "sublabel": "chia mảnh, vật liệu, lắp ghép"
+    },
+    {
+      "id": "approve",
+      "lane": "human",
+      "col": 1,
+      "type": "security",
+      "label": "Duyệt kiểu dáng",
+      "sublabel": "hình khối, màu, bề mặt"
+    },
+    {
+      "id": "cad",
+      "lane": "agent",
+      "col": 2,
+      "type": "backend",
+      "label": "builder",
+      "sublabel": "CAD + bản vẽ"
+    },
+    {
+      "id": "geo",
+      "lane": "tools",
+      "col": 2,
+      "type": "security",
+      "label": "Kiểm hình học",
+      "sublabel": "va chạm, thành, góc thoát"
+    },
+    {
+      "id": "review",
+      "lane": "agent",
+      "col": 3,
+      "type": "backend",
+      "label": "reviewer",
+      "sublabel": "DFM, lắp ráp, an toàn"
+    },
+    {
+      "id": "proto",
+      "lane": "tools",
+      "col": 3,
+      "type": "cloud",
+      "label": "Mẫu in 3D",
+      "sublabel": "lắp thử, nút, cổng"
+    },
+    {
+      "id": "verdict",
+      "lane": "agent",
+      "col": 4,
+      "type": "backend",
+      "label": "verifier",
+      "sublabel": "PASS / FAIL / BLOCKED"
+    },
+    {
+      "id": "freeze",
+      "lane": "human",
+      "col": 4,
+      "type": "security",
+      "label": "Chốt thiết kế",
+      "sublabel": "trước làm khuôn"
+    },
+    {
+      "id": "tooling",
+      "lane": "tools",
+      "col": 5,
+      "type": "cloud",
+      "label": "Khuôn + mẫu T1",
+      "sublabel": "nhiều tuần, đắt"
+    },
+    {
+      "id": "verdict_t1",
+      "lane": "agent",
+      "col": 5,
+      "type": "backend",
+      "label": "verifier",
+      "sublabel": "rơi, IP, ngoại quan"
+    },
+    {
+      "id": "learn",
+      "lane": "kb",
+      "col": 5,
+      "type": "database",
+      "label": "curator",
+      "sublabel": "lỗi → luật DFM"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-req-spec",
+      "from": "req",
+      "to": "spec",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-kb-spec",
+      "from": "kb_read",
+      "to": "spec",
+      "label": "nạp tri thức",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e-spec-approve",
+      "from": "spec",
+      "to": "approve",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-approve-cad",
+      "from": "approve",
+      "to": "cad",
+      "label": "đồng ý",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-cad-geo",
+      "from": "cad",
+      "to": "geo",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-geo-review",
+      "from": "geo",
+      "to": "review",
+      "label": "sạch",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-review-proto",
+      "from": "review",
+      "to": "proto",
+      "label": "đổi hình dáng",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-review-verdict",
+      "from": "review",
+      "to": "verdict",
+      "label": "không cần in thử",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e-proto-verdict",
+      "from": "proto",
+      "to": "verdict",
+      "label": "kết quả",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-verdict-freeze",
+      "from": "verdict",
+      "to": "freeze",
+      "label": "PASS",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-freeze-tooling",
+      "from": "freeze",
+      "to": "tooling",
+      "label": "đặt khuôn",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-tooling-verdict",
+      "from": "tooling",
+      "to": "verdict_t1",
+      "label": "mẫu T1",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-t1-learn",
+      "from": "verdict_t1",
+      "to": "learn",
+      "label": "ghi lại",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e-geo-fail",
+      "from": "geo",
+      "to": "cad",
+      "label": "lỗi",
+      "variant": "security",
+      "role": "error"
+    },
+    {
+      "id": "e-review-fail",
+      "from": "review",
+      "to": "cad",
+      "label": "cần sửa",
+      "variant": "security",
+      "role": "error"
+    },
+    {
+      "id": "e-verdict-fail",
+      "from": "verdict",
+      "to": "cad",
+      "label": "FAIL",
+      "variant": "security",
+      "role": "return"
+    },
+    {
+      "id": "e-tool-fix",
+      "from": "verdict_t1",
+      "to": "tooling",
+      "label": "sửa khuôn",
+      "variant": "security",
+      "role": "error"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Khác các domain khác ở đâu",
+      "items": [
+        "Hai tầng mẫu vật lý: in 3D vài giờ và rẻ, khuôn ép nhiều tuần và rất đắt",
+        "Kiểu dáng là phán đoán thẩm mỹ của người, không có bằng chứng tự động",
+        "Sau khi có khuôn chỉ sửa được theo hướng bớt thép (steel safe)"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Ba cổng người duyệt",
+      "items": [
+        "Duyệt kiểu dáng: hình khối, màu, vật liệu, bề mặt (CMF)",
+        "Chốt thiết kế trước khi làm khuôn: mọi thay đổi sau đó tốn tiền và thời gian",
+        "Duyệt mẫu T1 làm mẫu chuẩn; không có máy in hoặc khuôn thì verifier trả BLOCKED"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Đường quay lại",
+      "items": [
+        "Va chạm, thành mỏng, thiếu góc thoát, review hoặc lắp thử FAIL đều về builder",
+        "Mẫu T1 lỗi: sửa khuôn nếu bớt thép được, nếu không thì mở thay đổi mới từ planner"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Tri thức khép vòng",
+      "items": [
+        "curator ghi lỗi mẫu (cong vênh, vết co, lẫy gãy) thành luật DFM nội bộ",
+        "Mẫu sau planner nạp lại luật DFM và lỗi mẫu cũ"
+      ]
+    }
+  ]
+}
